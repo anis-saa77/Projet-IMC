@@ -1,46 +1,125 @@
- body {
-        font-family: Arial, sans-serif;
-        margin: 50px;
-        background-color: #f0f8ff;
-    }
-    h1 {
-        color: #333;
-        text-align: center;
-    }
-    form {
-        max-width: 400px;
-        margin: 0 auto;
-        padding: 20px;
-        background-color: #fff;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        border-radius: 8px;
-    }
-    label {
-        display: block;
-        margin: 15px 0 5px;
-    }
-    input[type="number"] {
-        width: 100%;
-        padding: 10px;
-        margin-bottom: 20px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-    }
-    button {
-        width: 100%;
-        padding: 10px;
-        background-color: #28a745;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-    button:hover {
-        background-color: #218838;
-    }
-    .result {
-        text-align: center;
-        margin-top: 20px;
-        font-size: 18px;
-        font-weight: bold;
-    }
+/* Style général */
+body {
+    font-family: Arial, sans-serif;
+    margin: 50px;
+    background-color: #f0f8ff; /* Bleu clair apaisant */
+}
+
+/* Titre principal */
+h1 {
+    color: #333; /* Texte foncé pour la lisibilité */
+    text-align: center;
+    font-size: 36px; /* Grande taille pour le titre */
+}
+
+/* Formulaire */
+form {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff; /* Fond blanc pour le formulaire */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Ombre douce */
+    border-radius: 8px;
+}
+
+/* Étiquettes */
+label {
+    display: block;
+    margin: 15px 0 5px;
+    color: #555; /* Texte secondaire */
+}
+
+/* Champs de saisie */
+input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc; /* Bordure grise */
+    border-radius: 4px;
+}
+
+/* Bouton */
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #28a745; /* Vert frais */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s; /* Transition douce */
+}
+
+button:hover {
+    background-color: #218838; /* Vert foncé au survol */
+}
+
+/* Résultats */
+.result {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 18px; /* Taille de texte normale */
+    font-weight: bold; /* Gras pour le texte de résultats */
+    background-color: #e0f7fa; /* Fond très clair */
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Ombre douce */
+}
+
+/* Span dans les résultats */
+.result span {
+    display: block; /* S'assurer que chaque ligne prend une ligne complète */
+    margin: 5px 0; /* Espacement entre les lignes */
+}
+
+/* Valeur IMC */
+.result .imc-value {
+    font-size: 24px; /* Taille plus grande pour l'IMC */
+    color: #28a745; /* Couleur principale */
+}
+
+/* Catégorie */
+.result .category {
+    font-size: 22px; /* Taille plus grande pour la catégorie */
+    color: #ff6f61; /* Couleur secondaire pour les alertes */
+    font-weight: bold; /* Texte en gras */
+    margin: 10px 0; /* Espacement supplémentaire */
+}
+
+/* Conseils */
+.result .advice {
+    font-size: 16px; /* Taille normale pour les conseils */
+    color: #555; /* Texte secondaire */
+    margin-top: 10px; /* Espacement au-dessus */
+    background-color: #ffffff; /* Fond blanc */
+    padding: 10px;
+    border-radius: 4px; /* Coins arrondis */
+    border-left: 5px solid #28a745; /* Bord gauche vert pour accent */
+    text-align: left; /* Aligner le texte à gauche pour le rendre plus lisible */
+}
+
+
+/* Catégories d'IMC avec couleurs */
+.imc-underweight {
+    color: #007bff; /* Bleu pour insuffisance pondérale (maigreur) */
+}
+
+.imc-normal {
+    color: #28a745; /* Vert pour corpulence normale */
+}
+
+.imc-overweight {
+    color: #ffcc00; /* Rouge clair pour surpoids */
+}
+
+.imc-obesity-moderate {
+    color: #ff6f61; /* Rouge pour obésité modérée */
+}
+
+.imc-obesity-severe {
+    color: #ff0000; /* Rouge foncé pour obésité sévère */
+}
+
+.imc-obesity-morbid {
+    color: #b30000; /* Très rouge pour obésité morbide */
+}
