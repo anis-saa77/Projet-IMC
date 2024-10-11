@@ -9,7 +9,8 @@ class IMCCalculator {
     public function __construct() {
         if (isset($_GET['weight']) && isset($_GET['height'])) {
             $this->weight = floatval($_GET['weight']);
-            $this->height = floatval($_GET['height']);
+            // Convertir la taille de centimètres à mètres (si saisie en cm)
+            $this->height = floatval($_GET['height']) / 100;
         } else {
             throw new Exception("Les paramètres du poids et de la taille sont requis.");
         }
