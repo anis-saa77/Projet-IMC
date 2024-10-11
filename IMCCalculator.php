@@ -36,11 +36,4 @@ class IMCCalculator {
     }
 }
 
-// Crée une instance d'IMCCalculator et affiche le résultat
-try {
-    $imcCalculator = new IMCCalculator();
-    $imcCalculator->displayResult();
-} catch (Exception $e) {
-    echo "Erreur : " . $e->getMessage();
-}
 ?>
