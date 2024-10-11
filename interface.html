@@ -1,97 +1,56 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Web service calcul d'IMC</title>
-  <style>
-    body {
-        font-family: Arial, sans-serif;
-        margin: 50px;
-        background-color: #f0f8ff;
-    }
-    h1 {
-        color: #333;
-        text-align: center;
-    }
-    form {
-        max-width: 400px;
-        margin: 0 auto;
-        padding: 20px;
-        background-color: #fff;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        border-radius: 8px;
-    }
-    label {
-        display: block;
-        margin: 15px 0 5px;
-    }
-    input[type="number"] {
-        width: 100%;
-        padding: 10px;
-        margin-bottom: 20px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-    }
-    button {
-        width: 100%;
-        padding: 10px;
-        background-color: #28a745;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-    button:hover {
-        background-color: #218838;
-    }
-    .result {
-        text-align: center;
-        margin-top: 20px;
-        font-size: 18px;
-        font-weight: bold;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculateur d'IMC</title>
 </head>
 <body>
-<h1>Calcul de l'IMC</h1>
+    <h1>Calculateur d'IMC</h1>
 
-<form id="imcForm" method="get" action="">
-  <label for="weight">Poids (kg):</label>
-  <input type="number" id="weight" name="weight" placeholder="Entrez votre poids en kg" required>
+    <!-- Formulaire pour saisir le poids et la taille -->
+    <form method="GET" action="index.php" onsubmit="return validateForm()">
+        <label for="weight">Poids (kg) :</label>
+        <input type="number" step="0.01" id="weight" name="weight" required><br><br>
 
-  <label for="height">Taille (cm):</label>
-  <input type="number" id="height" name="height" placeholder="Entrez votre taille en cm" required>
+        <label for="height">Taille (m) :</label>
+        <input type="number" step="0.01" id="height" name="height" required><br><br>
 
-  <button type="submit" onclick="return validateForm()">Calculer l'IMC</button>
-</form>
+        <input type="submit" value="Calculer IMC">
+    </form>
 
-<div class="result" id="resultat">
-    <?php
-    if (isset($_GET['weight']) && isset($_GET['height'])) {
-        include 'IMCCalculator.php'; 
-        try {
-            $imcCalculator = new IMCCalculator();
-            $imcCalculator->displayResult();
-        } catch (Exception $e) {
-            echo "Erreur : " . $e->getMessage();
+    <h2>Résultat :</h2>
+    <p>
+        <?php
+        // Vérification si les paramètres 'weight' et 'height' sont définis dans l'URL
+        if (isset($_GET['weight']) && isset($_GET['height'])) {
+            include 'IMCCalculator.php';  // Appelle le fichier qui contient la logique du calcul
+
+            try {
+                // Créer une instance d'IMCCalculator
+                $imcCalculator = new IMCCalculator();
+                // Appeler la méthode pour calculer et afficher l'IMC
+                echo "Votre IMC est : " . $imcCalculator->calculateIMC();
+            } catch (Exception $e) {
+                echo "Erreur : " . $e->getMessage();
+            }
         }
-    }
-    ?>
-</div>
+        ?>
+    </p>
 
-<script>
-    function validateForm() {
-        let weight = document.getElementById("weight").value;
-        let height = document.getElementById("height").value;
+    <script>
+        // Fonction JavaScript pour validation supplémentaire (facultatif)
+        function validateForm() {
+            let weight = document.getElementById("weight").value;
+            let height = document.getElementById("height").value;
 
-        if (weight <= 0 || height <= 0) {
-            alert("Le poids et la taille doivent être des valeurs positives.");
-            return false;
+            if (weight <= 0 || height <= 0) {
+                alert("Le poids et la taille doivent être des valeurs positives.");
+                return false;
+            }
+            return true;
         }
-        return true;
-    }
-</script>
+    </script>
 
 </body>
 </html>
