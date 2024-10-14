@@ -1,3 +1,13 @@
+<?php
+session_start();
+
+// Si l'utilisateur est déjà connecté, rediriger vers la page de calcul d'IMC
+if (isset($_SESSION['user_id'])) {
+    header("Location: imc.php");
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -115,5 +125,5 @@
         }
     </script>
 
-</body>
+
 </html>
