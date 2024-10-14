@@ -1,39 +1,44 @@
 <?php
-//include('includes/db.php');
-
+// Vérifiez si le formulaire a été soumis
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $_POST['username'];
-    $password = password_hash($_POST['password'], PASSWORD_BCRYPT); // Hachage du mot de passe
+    // Récupérer les données du formulaire
+    $ssn = $_POST['ssn'];
+    $firstName = $_POST['firstName'];
+    $lastName = $_POST['lastName'];
+    $dob = $_POST['dob'];
+    $phone = $_POST['phone'];
+    $email = $_POST['email'];
+    $postalCode = $_POST['postalCode'];
+    $password = $_POST['password'];
 
-    $stmt = $pdo->prepare("INSERT INTO users (username, password) VALUES (?, ?)");
-    try {
-        $stmt->execute([$username, $password]);
-        header("Location: login.php");
-        exit();
-    } catch (Exception $e) {
-        $error = "Erreur lors de l'inscription. Ce nom d'utilisateur est peut-être déjà pris.";
+    // Valider que toutes les informations sont présentes
+    if (empty($ssn) || empty($firstName) || empty($lastName) || empty($dob) || empty($phone) || empty($email) || empty($postalCode) || empty($password)) {
+        die("Tous les champs sont requis.");
+    }
+
+    // Créer une nouvelle ligne pour l'utilisateur
+    $userData = [
+        $ssn,
+        $firstName,
+        $lastName,
+        password_hash($password, PASSWORD_DEFAULT),
+        $dob,
+        $phone,
+        $email,
+        $postalCode,
+    ];
+
+    // Ouvrir le fichier users.csv en mode ajout
+    $file = fopen('includes/users.csv', 'a');
+
+    // Vérifier si le fichier s'est ouvert avec succès
+    if ($file) {
+        // Écrire les données dans le fichier
+        fputcsv($file, $userData);
+        fclose($file);
+        echo "Inscription réussie !"; // Message de confirmation
+    } else {
+        echo "Erreur lors de l'ouverture du fichier.";
     }
 }
 ?>
-
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Inscription</title>
-    <link rel="stylesheet" href="css/styles.css">
-</head>
-<body>
-    <div class="container">
-        <h1>Inscription</h1>
-        <form action="register.php" method="POST">
-            <label for="username">Nom d'utilisateur</label>
-            <input type="text" name="username" required>
-            <label for="password">Mot de passe</label>
-            <input type="password" name="password" required>
-            <button type="submit">S'inscrire</button>
-        </form>
-        <?php if (!empty($error)) echo "<p>$error</p>"; ?>
-    </div>
-</body>
-</html>
