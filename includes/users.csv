@@ -3,3 +3,5 @@ id social_security_number, firstname, lastname, password, birthday, phone_number
 123,tes,test,2024-10-03,9878675645,toto@toto.fr,84310,$2y$10$/yarUm.0PKv2GinBIJMSKuKXE/kt03BuKZifLqqFf7BP/rndWtojW
 123,tes,test,$2y$10$xyWqSjfTFcpLPxcE.QRji.kKUmfxryRn83ro6rT2ersE5Ry7cebDe,2024-10-03,9878675645,toto@toto.fr,84310
 111-11-1111,ae,az,$2y$10$CO3yXwBvi8NMRHvEMzeM/ebn3essdb3CBRWVUHUc0O2ydD8T8nUPO,2024-10-10,0689901234,este@rez.fr,84567
+167-12-1234,QA,A,$2y$10$kcsDAZg1hXh3N/6WeLNeiefOD9QzfdkdzYsoC72KgNRlMc22dIk4C,2024-10-18,0789898989,toto@toto.fr,84000
+111-11-1111,test,test,$2y$10$Mnn9JX7uUtp.ktGkn2/jKuMqjE2sByp.j8Iv44hw9Q6OHejFOIGge,2024-10-06,0989786756,test@test.fr,12345

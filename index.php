@@ -12,7 +12,7 @@
     <!-- Navigation -->
     <ul>
         <li><a href="login.php" class="btn">Se connecter</a></li>
-        <li><a class="btn" href="javascript:void(0);" onclick="openModal()">S'inscrire</a></li>
+        <li><a href="register.php" class="btn" >S'inscrire</a></li>
     </ul>
 
     <div class="container">
