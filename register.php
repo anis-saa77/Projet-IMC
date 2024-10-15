@@ -10,6 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $phone = $_POST['phone'];
     $email = $_POST['email'];
     $postalCode = $_POST['postalCode'];
+
     $password = $_POST['password'];
 
     // Valider que toutes les informations sont présentes
