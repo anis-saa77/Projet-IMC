@@ -1,4 +1,6 @@
 <?php
+include('includes/db.php');
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Récupérer les données du formulaire
     $ssn = $_POST['ssn'];
@@ -8,49 +10,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $phone = $_POST['phone'];
     $email = $_POST['email'];
     $postalCode = $_POST['postalCode'];
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT); // Hachage du mot de passe
 
-    // Valider les entrées
-    $errors = [];
-    if (empty($ssn)) $errors[] = "Le N° de sécurité sociale est requis.";
-    if (empty($firstName)) $errors[] = "Le prénom est requis.";
-    if (empty($lastName)) $errors[] = "Le nom est requis.";
-    if (empty($dob)) $errors[] = "La date de naissance est requise.";
-    if (empty($phone)) $errors[] = "Le numéro de téléphone est requis.";
-    if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) $errors[] = "Un email valide est requis.";
-    if (empty($postalCode)) $errors[] = "Le code postal est requis.";
-    if (empty($_POST['password'])) $errors[] = "Le mot de passe est requis.";
-    if ($_POST['password'] !== $_POST['confirmPassword']) $errors[] = "Les mots de passe ne correspondent pas.";
+    $password = $_POST['password'];
 
-    // Afficher les erreurs s'il y en a
-    if (!empty($errors)) {
-        foreach ($errors as $error) {
-            echo $error . "<br>";
-        }
-        exit; // Stoppe l'exécution du script si des erreurs sont présentes
+    // Valider que toutes les informations sont présentes
+    if (empty($ssn) || empty($firstName) || empty($lastName) || empty($dob) || empty($phone) || empty($email) || empty($postalCode) || empty($password)) {
+        die("Tous les champs sont requis.");
     }
 
-    // Chemin du fichier CSV
-    $csvFile = 'users.csv';
+    // Créer une nouvelle ligne pour l'utilisateur
+    $userData = [
+        $ssn,
+        $firstName,
+        $lastName,
+        password_hash($password, PASSWORD_DEFAULT),
+        $dob,
+        $phone,
+        $email,
+        $postalCode,
+    ];
 
-    // Ouvrir le fichier en mode ajout
-    $file = fopen($csvFile, 'a');
+    // Ouvrir le fichier users.csv en mode ajout
+    $file = fopen('includes/users.csv', 'a');
 
+    // Vérifier si le fichier s'est ouvert avec succès
     if ($file) {
-        // Créer une ligne à écrire dans le fichier
-        $data = array($ssn, $firstName, $lastName, $dob, $phone, $email, $postalCode, $password);
-        // Écrire la ligne dans le fichier
-        fputcsv($file, $data);
-
-        // Fermer le fichier
+        // Écrire les données dans le fichier
+        fputcsv($file, $userData);
         fclose($file);
-
-        // Rediriger vers une page de confirmation ou afficher un message
-        echo "Inscription réussie !";
+        echo "Inscription réussie !"; // Message de confirmation
     } else {
         echo "Erreur lors de l'ouverture du fichier.";
     }
-} else {
-    echo "Méthode de requête invalide.";
 }
 ?>

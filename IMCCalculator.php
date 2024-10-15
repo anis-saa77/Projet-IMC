@@ -330,7 +330,6 @@ class IMCCalculator {
                         L'accompagnement médical est essentiel pour déterminer les meilleures options en fonction de votre situation personnelle. N'hésitez pas à consulter des professionnels de santé pour obtenir des conseils adaptés à votre cas.
                     </span>";
             }
-
         } catch (Exception $e) {
             echo "Erreur : " . $e->getMessage();
         }
