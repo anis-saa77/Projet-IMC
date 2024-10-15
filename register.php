@@ -19,7 +19,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Créer une nouvelle ligne pour l'utilisateur
+    $id = getLastUserId('includes/users.csv') + 1;
+
     $userData = [
+        $id,
         $ssn,
         $firstName,
         $lastName,
@@ -43,4 +46,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "Erreur lors de l'ouverture du fichier.";
     }
 }
+
+function getLastUserId($filename) {
+    $lastId = 0;
+
+    if (($handle = fopen($filename, 'r')) !== false) {
+        while (($data = fgetcsv($handle, 1000, ",")) !== false) {
+            $lastId = $data[0]; // La première colonne contient l'ID
+        }
+        fclose($handle);
+    }
+
+    return $lastId;
+}
+
+// Générer un nouvel ID
 ?>
