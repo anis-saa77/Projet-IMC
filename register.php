@@ -1,5 +1,6 @@
 <?php
-// Vérifiez si le formulaire a été soumis
+include('includes/db.php');
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Récupérer les données du formulaire
     $ssn = $_POST['ssn'];

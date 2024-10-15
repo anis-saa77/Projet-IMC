@@ -6,11 +6,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST['password'];
 
     // Récupérer l'utilisateur à partir du fichier CSV
-    $user = getUsersFromData($social_security_number, $password);
+    $user = getUserFromData($social_security_number, $password);
+
     // Vérification des informations d'identification
     //TODO  HASHAGE DE MDP : if ($user && password_verify($password, $user['password']))
     if ($user) {
-        $_SESSION['user_id'] = $user['social_security_number']; // Vous pouvez utiliser un identifiant unique
+        $_SESSION['user_id'] = $user['id'];
         header("Location: imc.php");
         exit();
     } else {
@@ -18,28 +19,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-function getUsersFromData($social_security_number, $password) {
+function getUserFromData($social_security_number, $password) {
     $filename = "includes/users.csv";
     $users = [];
 
-    // Ouvrir le fichier CSV
     if (($handle = fopen($filename, 'r')) !== false) {
-        // Ignore le header
         fgetcsv($handle);
 
-        // Lire chaque ligne du fichier CSV
-        while (($data = fgetcsv($handle)) !== false) {
-            // Assurez-vous que les données sont bien chargées (8 colonnes attendues)
-            if (count($data) == 8) {
+        // Lire chaque ligne du fichier CSV avec délimiteur ';'
+        while (($data = fgetcsv($handle, 1000, ";")) !== false) {
+            if (count($data) == 9) {
                 $users[] = [
-                    'social_security_number' => $data[0],
-                    'firstname' => $data[1],
-                    'lastname' => $data[2],
-                    'password' => $data[3], // Mot de passe haché
-                    'birthday' => $data[4],
-                    'phone_number' => $data[5],
-                    'email' => $data[6],
-                    'postal_code' => $data[7]
+                    'id' => $data[0],
+                    'social_security_number' => $data[1],
+                    'firstname' => $data[2],
+                    'lastname' => $data[3],
+                    'password' => $data[4],
+                    'birthday' => $data[5],
+                    'phone_number' => $data[6],
+                    'email' => $data[7],
+                    'postal_code' => $data[8]
                 ];
             }
         }
@@ -48,21 +47,20 @@ function getUsersFromData($social_security_number, $password) {
         echo "Erreur : Impossible d'ouvrir le fichier.";
     }
 
-    // Rechercher l'utilisateur en fonction du numéro de sécurité sociale
+    // Rechercher l'utilisateur
     foreach ($users as $u) {
-        // Comparer le numéro de sécurité sociale et le mot de passe
-        if ($u['social_security_number'] === $social_security_number) {
-            //TODO
-            if ($password === $u['password']) {
-                return $u;
-            } else {
-                return null; // Si le mot de passe est incorrect
+        echo "<pre>";
+            print_r($u['social_security_number']);
+            print_r($u['password']);
+        echo "</pre>";
+        if (trim((string)$u['social_security_number']) === trim((string)$social_security_number)) {
+            if (trim((string)$password) === trim((string)$u['password'])) {
+                return $u; // Correspondance trouvée
             }
         }
-    }
-
-    return null; // Aucun utilisateur trouvé
+    return null;
 }
+
 ?>
 
 <!DOCTYPE html>
