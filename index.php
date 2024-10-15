@@ -10,7 +10,7 @@
 <body>
 
     <!-- Navigation -->
-    <ul>
+    <ul class="inscription-block">
         <li><a href="login.php" class="btn">Se connecter</a></li>
         <li><a class="btn" href="javascript:void(0);" onclick="openModal()">S'inscrire</a></li>
     </ul>

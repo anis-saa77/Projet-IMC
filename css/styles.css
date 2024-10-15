@@ -53,8 +53,13 @@
     }
 
 
-
-    li a {
+    .inscription-block{
+       display:flex;
+        background-color: #000;
+        align-items: end;
+        justify-content: end;
+    }
+    .inscription-block > li a {
       display: block;
       color: white;
       text-align: center;
@@ -62,6 +67,10 @@
       text-decoration: none;
     }
 
-    li a:hover {
+    .inscription-block > li {
+      background-color: #000;
+
+    }
+    .inscription-block > li:hover {
       background-color: #28a745;
     }
