@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 id social_security_number, firstname, lastname, password, birthday, phone_number, email, postal_code
 1 1030522044055, anis, saa, 0000, 18/05/2003, 0611223344, anis@gmail.com, 84000
 123,tes,test,2024-10-03,9878675645,toto@toto.fr,84310,$2y$10$/yarUm.0PKv2GinBIJMSKuKXE/kt03BuKZifLqqFf7BP/rndWtojW
@@ -5,3 +6,9 @@ id social_security_number, firstname, lastname, password, birthday, phone_number
 111-11-1111,ae,az,$2y$10$CO3yXwBvi8NMRHvEMzeM/ebn3essdb3CBRWVUHUc0O2ydD8T8nUPO,2024-10-10,0689901234,este@rez.fr,84567
 167-12-1234,QA,A,$2y$10$kcsDAZg1hXh3N/6WeLNeiefOD9QzfdkdzYsoC72KgNRlMc22dIk4C,2024-10-18,0789898989,toto@toto.fr,84000
 111-11-1111,test,test,$2y$10$Mnn9JX7uUtp.ktGkn2/jKuMqjE2sByp.j8Iv44hw9Q6OHejFOIGge,2024-10-06,0989786756,test@test.fr,12345
+=======
+id, social_security_number, firstname, lastname, password, birthday, phone_number, email, postal_code
+1, 1234,Anis,Saa,$2y$10$VVOc8F1azOQXTGK./fuaQ.uClgTs/IuVayG1C1Lsprez9qvp73uLq,2003-05-18,0768683592,anisamara777@gmail.com,13100
+2, 000-00-0000,Anis,Saa,$2y$10$AxsvcEmdspSRbR4Xm5XcbuO4VrVGlrd8c4RVLPLtL08S1ePHY3RRO,2024-10-08,0768683592,anisamara777@gmail.com,13100
+3,000-00-0000,Anis,Saa,$2y$10$zi/jfohYSTH5Uw4Q8K.CoOfg.vMagKdkwoXeBCzOjVYs2hFxVFRGS,2024-10-02,0768683592,anisamara777@gmail.com,84000
+>>>>>>> 70f97b2a72d42901c03a95332a57f9b54229e2b9

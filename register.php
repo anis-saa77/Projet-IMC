@@ -8,8 +8,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $phone = filter_input(INPUT_POST, 'phone', FILTER_SANITIZE_STRING);
     $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
     $postalCode = filter_input(INPUT_POST, 'postalCode', FILTER_SANITIZE_STRING);
-    $password = $_POST['password'];
-    $confirmPassword = $_POST['confirmPassword'];
 
     // Validate required fields
     if (empty($ssn) || empty($firstName) || empty($lastName) || empty($dob) || empty($phone) || empty($email) || empty($postalCode) || empty($password) || empty($confirmPassword)) {
@@ -54,6 +52,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 }
+
+function getLastUserId($filename) {
+    $lastId = 0;
+
+    if (($handle = fopen($filename, 'r')) !== false) {
+        while (($data = fgetcsv($handle, 1000, ",")) !== false) {
+            $lastId = $data[0]; // La première colonne contient l'ID
+        }
+        fclose($handle);
+    }
+
+    return $lastId;
+}
+
+// Générer un nouvel ID
 ?>
 
 <!DOCTYPE html>

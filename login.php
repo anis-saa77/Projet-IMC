@@ -1,16 +1,23 @@
 <?php
 session_start(); // Démarrer la session
 
+$error = ""; // Initialize error variable
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $social_security_number = $_POST['social_security_number'];
     $password = $_POST['password'];
 
     // Récupérer l'utilisateur à partir du fichier CSV
-    $user = getUsersFromData($social_security_number, $password);
+    $user = getUserFromData($social_security_number, $password);
+    echo "<pre>";
+        echo "user : " .$user  . "<br>";
+        echo "Mot de passe enregistré : " .$user['password']  . "<br>";
+        echo "Mot de passe saisi : " . $password . "<br>";
+    echo "</pre>";
     // Vérification des informations d'identification
-    //TODO  HASHAGE DE MDP : if ($user && password_verify($password, $user['password']))
-    if ($user) {
-        $_SESSION['user_id'] = $user['social_security_number']; // Vous pouvez utiliser un identifiant unique
+    if ($user && password_verify($password, $user['password'])) {
+        session_regenerate_id(true); // Regenerate session ID for security
+        $_SESSION['user_id'] = $user['id'];
         header("Location: imc.php");
         exit();
     } else {
@@ -18,50 +25,48 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-function getUsersFromData($social_security_number, $password) {
+function getUserFromData($social_security_number, $password) {
     $filename = "includes/users.csv";
-    $users = [];
 
-    // Ouvrir le fichier CSV
+    if (!file_exists($filename)) {
+        // Log error and show friendly message
+        error_log("Erreur : Impossible d'ouvrir le fichier $filename.");
+        return null; // or handle error differently
+    }
+
     if (($handle = fopen($filename, 'r')) !== false) {
-        // Ignore le header
-        fgetcsv($handle);
+        fgetcsv($handle); // Ignore header
+        // Lire chaque ligne du fichier CSV avec délimiteur ';'
+        while (($data = fgetcsv($handle, 1000, ",")) !== false) {
+            echo "<pre>";
+                echo "data : "  .$data[2] . "<br>";
+            echo "</pre>";
+                // Check the social security number
+            echo "<pre>";
+                echo "ssn : "  .trim($data[1]) . "<br>";
+                echo "ssn : "  .trim($social_security_number) . "<br>";
+            echo "</pre>";
+            if (trim($data[1]) === trim($social_security_number)) {
 
-        // Lire chaque ligne du fichier CSV
-        while (($data = fgetcsv($handle)) !== false) {
-            // Assurez-vous que les données sont bien chargées (8 colonnes attendues)
-            if (count($data) == 8) {
-                $users[] = [
-                    'social_security_number' => $data[0],
-                    'firstname' => $data[1],
-                    'lastname' => $data[2],
-                    'password' => $data[3], // Mot de passe haché
-                    'birthday' => $data[4],
-                    'phone_number' => $data[5],
-                    'email' => $data[6],
-                    'postal_code' => $data[7]
+                // Return user data if social security number matches
+                return [
+                    'id' => $data[0],
+                    'social_security_number' => $data[1],
+                    'firstname' => $data[2],
+                    'lastname' => $data[3],
+                    'password' => $data[4],
+                    'birthday' => $data[5],
+                    'phone_number' => $data[6],
+                    'email' => $data[7],
+                    'postal_code' => $data[8]
                 ];
             }
+
         }
         fclose($handle);
-    } else {
-        echo "Erreur : Impossible d'ouvrir le fichier.";
     }
 
-    // Rechercher l'utilisateur en fonction du numéro de sécurité sociale
-    foreach ($users as $u) {
-        // Comparer le numéro de sécurité sociale et le mot de passe
-        if ($u['social_security_number'] === $social_security_number) {
-            //TODO
-            if ($password === $u['password']) {
-                return $u;
-            } else {
-                return null; // Si le mot de passe est incorrect
-            }
-        }
-    }
-
-    return null; // Aucun utilisateur trouvé
+    return null; // User not found
 }
 ?>
 
@@ -82,7 +87,7 @@ function getUsersFromData($social_security_number, $password) {
             <input type="password" name="password" required>
             <button type="submit">Se connecter</button>
         </form>
-        <?php if (!empty($error)) echo "<p>$error</p>"; ?>
+        <?php if (!empty($error)) echo "<p>" . htmlspecialchars($error) . "</p>"; ?>
     </div>
 </body>
 </html>
