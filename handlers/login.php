@@ -9,9 +9,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $user = getUserFromData($social_security_number, $password);
 
     // Vérification des informations d'identification
-    //TODO : HASHAGE DE MDP si le mot de passe est hashé : if ($user && password_verify($password, $user['password']))
     if ($user && password_verify($password, $user['password'])) {
-        $_SESSION['user_id'] = $user['id'];
+        $_SESSION['user'] = $user;
         header("Location: index.php");
         exit();
     } else {
@@ -21,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 function getUserFromData($social_security_number) {
-    $filename = "includes/users.csv";
+    $filename = "../includes/users.csv";
     $users = [];
 
     if (($handle = fopen($filename, 'r')) !== false) {
@@ -59,27 +58,3 @@ function getUserFromData($social_security_number) {
 }
 
 ?>
-
-
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Connexion</title>
-    <link rel="stylesheet" href="css/styles.css">
-</head>
-<body>
-    <div class="container">
-        <h1>Connexion</h1>
-        <form action="login.php" method="POST">
-            <label for="social_security_number">N° de sécurité sociale</label>
-            <input type="text" name="social_security_number" required>
-            <label for="password">Mot de passe</label>
-            <input type="password" name="password" required>
-            <button type="submit">Se connecter</button>
-        </form>
-        <?php if (!empty($error)) echo "<p>$error</p>"; ?>
-    </div>
-</body>
-</html>
-
