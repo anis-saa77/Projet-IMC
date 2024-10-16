@@ -50,9 +50,13 @@
       margin: 0;
       padding: 0;
       overflow: hidden;
+      background-color: #333;
     }
 
-
+    li {
+      float: right;
+      background-color: #333;
+    }
 
     li a {
       display: block;

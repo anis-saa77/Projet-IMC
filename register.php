@@ -8,6 +8,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $phone = filter_input(INPUT_POST, 'phone', FILTER_SANITIZE_STRING);
     $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
     $postalCode = filter_input(INPUT_POST, 'postalCode', FILTER_SANITIZE_STRING);
+    $password = $_POST['password'];
+    $confirmPassword = $_POST['confirmPassword'];
 
     // Validate required fields
     if (empty($ssn) || empty($firstName) || empty($lastName) || empty($dob) || empty($phone) || empty($email) || empty($postalCode) || empty($password) || empty($confirmPassword)) {
@@ -29,8 +31,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Hash the password
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-        // Prepare user data
+        // Find the next ID
+        $filePath = 'includes/users.csv';
+        $nextId = 1;
+
+        if (file_exists($filePath)) {
+            $file = fopen($filePath, 'r');
+            while (($row = fgetcsv($file)) !== false) {
+                $lastRow = $row;
+            }
+            fclose($file);
+
+            // If there is a last row, increment the ID
+            if (isset($lastRow)) {
+                $nextId = (int)$lastRow[0] + 1;
+            }
+        }
+
+        // Prepare user data with the new ID
         $userData = [
+            $nextId,           // Auto-incremented ID
             $ssn,
             $firstName,
             $lastName,
@@ -42,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         ];
 
         // Write to CSV
-        $file = fopen('includes/users.csv', 'a');
+        $file = fopen($filePath, 'a');
         if ($file) {
             fputcsv($file, $userData);
             fclose($file);
@@ -52,22 +72,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 }
-
-function getLastUserId($filename) {
-    $lastId = 0;
-
-    if (($handle = fopen($filename, 'r')) !== false) {
-        while (($data = fgetcsv($handle, 1000, ",")) !== false) {
-            $lastId = $data[0]; // La première colonne contient l'ID
-        }
-        fclose($handle);
-    }
-
-    return $lastId;
-}
-
-// Générer un nouvel ID
 ?>
+
 
 <!DOCTYPE html>
 <html lang="fr">
