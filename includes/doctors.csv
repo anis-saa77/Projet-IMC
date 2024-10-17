@@ -1,0 +1,3 @@
+id, doctor_pro_identifier, firstname, lastname, password, birthday, phone_number, email, postal_code
+1,222-22-2222,john,doe,$2y$10$lT8/2jTFhTzdvG4SwwebeOyRhu5To5gyMr6k9xIQyelv/r96Lf23O,2024-10-04,0978787878,toto@toto.fr,13000
+2,1234,farouk,brahimi,$2y$10$XsLeBAjo7JSTPGnjjUKejOCPgWwjNbFk.e1m.CINwjr6ChSjqhZ7K,2001-03-06,0558410045,brahimi.a.farouk@gmail.com,22000
