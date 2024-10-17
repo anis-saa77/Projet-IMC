@@ -24,6 +24,32 @@ class IMCCalculator {
         }
     }
 
+    public function saveIMCToHistory($user) {
+            $user_id = $user['id'];
+            try {
+                // Calculer l'IMC
+                $imc = $this->calculateIMC();
+
+                // Obtenir la date actuelle
+                $date = date("Y-m-d");
+
+                // Préparer les données à ajouter dans le fichier CSV
+                $record = [$date, $this->height * 100, $this->weight, $imc, $user_id]; // Taille en cm
+
+                // Ajouter les données dans historic.csv
+                $filename = '../includes/historic.csv';
+                if (($handle = fopen($filename, 'a')) !== false) {
+                    fputcsv($handle, $record);
+                    fclose($handle);
+                    echo "Données de l'IMC enregistrées avec succès.";
+                } else {
+                    throw new Exception("Erreur lors de l'enregistrement dans le fichier.");
+                }
+            } catch (Exception $e) {
+                echo "Erreur : " . $e->getMessage();
+            }
+    }
+
     // Méthode pour afficher le résultat avec interprétation
         public function displayResult() {
             try {

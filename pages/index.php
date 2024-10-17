@@ -30,6 +30,9 @@ ob_start();
                 try {
                     $imcCalculator = new IMCCalculator();
                     $imcCalculator->displayResult();
+                    if (isset($_SESSION['user'])) {
+                        $imcCalculator->saveIMCToHistory($_SESSION['user']);
+                    }
                 } catch (Exception $e) {
                     echo "Erreur : " . $e->getMessage();
                 }
