@@ -1,14 +1,17 @@
 <?php
-session_start(); // Démarrer la session
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $social_security_number = $_POST['social_security_number'];
     $password = $_POST['password'];
+    $isDoctor = isset($_POST['is_doctor']) ? true : false; // Check if the user is a doctor
 
-    // Récupérer l'utilisateur à partir du fichier CSV
-    $user = getUserFromData($social_security_number, $password);
+    // Retrieve the user from the CSV file based on their type
+    $user = getUserFromData($social_security_number, $password, $isDoctor);
 
-    // Vérification des informations d'identification
+    // Validate the credentials
     if ($user && password_verify($password, $user['password'])) {
         $_SESSION['user'] = $user;
         header("Location: index.php");
@@ -16,29 +19,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         $error = "Nom d'utilisateur ou mot de passe incorrect.";
     }
-
 }
 
-function getUserFromData($social_security_number) {
-    $filename = "../includes/users.csv";
+function getUserFromData($social_security_number, $password, $isDoctor) {
+    $filename = $isDoctor ? "../includes/doctors.csv" : "../includes/users.csv"; // Determine the correct file
     $users = [];
 
     if (($handle = fopen($filename, 'r')) !== false) {
         fgetcsv($handle); // Ignore the first line (headers)
 
-        // Lire chaque ligne du fichier CSV
+        // Read each line from the CSV file
         while (($data = fgetcsv($handle, 1000, ",")) !== false) {
-            if (count($data) == 9) {  // Assurez-vous que la ligne a le bon nombre de colonnes
+            if ($isDoctor && count($data) == 9) {  // Doctor CSV has 8 fields
+                $users[] = [
+                    'id' => $data[0],
+                    'doctor_pro_identifier' => $data[1],
+                    'firstname' => $data[2],
+                    'lastname' => $data[3],
+                    'password' => $data[4],
+                    'birthday' => $data[5],
+                    'phone_number' => $data[6],
+                    'email' => $data[7],
+                    'postal_code' => $data[8],
+                    // Note: No postal_code for doctors in this CSV structure
+                ];
+            } elseif (!$isDoctor && count($data) == 9) {  // User CSV has 9 fields
                 $users[] = [
                     'id' => $data[0],
                     'social_security_number' => $data[1],
                     'firstname' => $data[2],
                     'lastname' => $data[3],
-                    'password' => $data[4],  // Password hash is stored here
+                    'password' => $data[4],
                     'birthday' => $data[5],
                     'phone_number' => $data[6],
                     'email' => $data[7],
-                    'postal_code' => $data[8]
+                    'postal_code' => $data[8],
                 ];
             }
         }
@@ -47,14 +62,16 @@ function getUserFromData($social_security_number) {
         echo "Erreur : Impossible d'ouvrir le fichier.";
     }
 
-    // Rechercher l'utilisateur par son N° de sécurité sociale
+    // Search for the user by their social security number
     foreach ($users as $u) {
-        if (trim((string)$u['social_security_number']) === trim((string)$social_security_number)) {
-            return $u; // Correspondance trouvée, renvoyer l'utilisateur
+        if (!$isDoctor && trim((string)$u['social_security_number']) === trim((string)$social_security_number)) {
+            return $u; // Match found, return the user
+        }
+        if($isDoctor && trim((string)$u['doctor_pro_identifier']) === trim((string)$social_security_number)){
+            return $u;
         }
     }
-    
-    return null; // Renvoie null si aucune correspondance n'est trouvée
-}
 
+    return null; // Return null if no match is found
+}
 ?>
