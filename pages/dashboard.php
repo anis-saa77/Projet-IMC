@@ -1,7 +1,7 @@
 <?php
 $pageTitle = "Dashboard";
 include '../handlers/dashboard.php'; // Assurez-vous que ce chemin est correct
-
+session_start();
 // Commencer la capture du contenu
 ob_start();
 ?>
@@ -11,7 +11,7 @@ ob_start();
 
     <?php if (isset($imcHistory)) : ?>
         <?php if (count($imcHistory) > 0) : ?>
-            <table>
+            <table id="customers">
                 <thead>
                     <tr>
                         <th>Date</th>

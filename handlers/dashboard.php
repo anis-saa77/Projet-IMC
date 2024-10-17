@@ -19,13 +19,8 @@ function getIMCHistory($user_id) {
 
         // Lire chaque ligne du fichier CSV
         while (($data = fgetcsv($handle, 1000, ",")) !== false) {
-            // Debug : Afficher la ligne courante
-            var_dump($data);
-
             if (count($data) == 5) { // Vérifier que la ligne a 5 colonnes
-                // Debug : Vérifier l'ID utilisateur
-                echo "User ID from CSV: " . trim($data[0]) . " | User ID from session: $user_id <br>";
-
+                
                 // Si l'ID correspond à l'utilisateur connecté, ajouter l'entrée à l'historique
                 if (trim($data[0]) == $user_id) { // L'ID est dans la première colonne
                     $history[] = [
@@ -35,9 +30,6 @@ function getIMCHistory($user_id) {
                         'imc' => $data[4]
                     ];
 
-                    // Debug : Afficher ce qui est ajouté à l'historique
-                    echo "Added to history: ";
-                    var_dump($history[count($history) - 1]);
                 }
             } else {
                 echo "Mauvais format de ligne, attendu 5 colonnes mais reçu " . count($data) . "<br>";
@@ -47,9 +39,6 @@ function getIMCHistory($user_id) {
     } else {
         echo "Erreur : Impossible d'ouvrir le fichier.";
     }
-
-    // Debug : Afficher l'historique final avant de retourner
-    var_dump($history);
 
     return $history;
 }
