@@ -2,6 +2,7 @@
 <?php
 $pageTitle = "Connexion - Calculateur d'IMC";
 include '../handlers/login.php';
+session_start();
 
 // Commencer la capture du contenu
 ob_start();

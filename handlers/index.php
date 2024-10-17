@@ -24,31 +24,54 @@ class IMCCalculator {
         }
     }
 
-    public function saveIMCToHistory($user) {
-            $user_id = $user['id'];
-            try {
-                // Calculer l'IMC
-                $imc = $this->calculateIMC();
+public function saveIMCToHistory($user) {
+    $user_id = $user['id'];
 
-                // Obtenir la date actuelle
-                $date = date("Y-m-d");
+    // Debug : Afficher l'ID utilisateur
+    var_dump("User ID: " . $user_id);
 
-                // Préparer les données à ajouter dans le fichier CSV
-                $record = [$user_id, $date, $this->height * 100, $this->weight, $imc]; // Taille en cm
+    try {
+        // Calculer l'IMC
+        $imc = $this->calculateIMC();
 
-                // Ajouter les données dans historic.csv
-                $filename = '../includes/historic.csv';
-                if (($handle = fopen($filename, 'a')) !== false) {
-                    fputcsv($handle, $record);
-                    fclose($handle);
-                    echo "Données de l'IMC enregistrées avec succès.";
-                } else {
-                    throw new Exception("Erreur lors de l'enregistrement dans le fichier.");
-                }
-            } catch (Exception $e) {
-                echo "Erreur : " . $e->getMessage();
-            }
+        // Debug : Afficher les valeurs de taille, poids et IMC calculé
+        var_dump("Height: " . $this->height);
+        var_dump("Weight: " . $this->weight);
+        var_dump("IMC: " . $imc);
+
+        // Obtenir la date actuelle
+        $date = date("Y-m-d");
+
+        // Debug : Afficher la date actuelle
+        var_dump("Date: " . $date);
+
+        // Préparer les données à ajouter dans le fichier CSV
+        $record = [$user_id, $date, $this->height * 100, $this->weight, $imc]; // Taille en cm
+
+        // Debug : Afficher les données qui seront ajoutées au fichier
+        var_dump("Record: ", $record);
+
+        // Ajouter les données dans historic.csv
+        $filename = '../includes/historic.csv';
+
+        // Debug : Vérifier si le fichier peut être ouvert en mode ajout
+        var_dump("Opening file: " . $filename);
+
+        if (($handle = fopen($filename, 'a')) !== false) {
+            fputcsv($handle, $record);
+            fclose($handle);
+
+            // Debug : Confirmer que les données ont été enregistrées
+            var_dump("Données de l'IMC enregistrées avec succès.");
+        } else {
+            throw new Exception("Erreur lors de l'enregistrement dans le fichier.");
+        }
+    } catch (Exception $e) {
+        // Debug : Afficher l'erreur en cas d'exception
+        var_dump("Erreur : " . $e->getMessage());
     }
+}
+
 
     // Méthode pour afficher le résultat avec interprétation
         public function displayResult() {
