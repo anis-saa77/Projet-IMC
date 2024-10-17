@@ -22,9 +22,21 @@ ob_start();
         ?>
 
         <form id="signupForm" method="POST">
-            <label for="ssn">N° de sécurité sociale:</label>
-            <input type="text" id="ssn" name="ssn" placeholder="Entrez votre N° de sécurité sociale" required value="<?php echo isset($ssn) ? htmlspecialchars($ssn) : ''; ?>">
 
+            <label>
+                <input type="checkbox" name="registerAsDoctor" id="registerAsDoctor">
+                S'inscrire en tant que médecin
+            </label>
+
+            <div id="doctorIdentifierField" style="display: none;">
+                <label for="doctor_pro_identifier">N° de Médecin professionnel:</label>
+                <input type="text" name="doctor_pro_identifier" placeholder="Identifiant professionnel du médecin" value="<?php echo isset($doctor_pro_identifier) ? htmlspecialchars($doctor_pro_identifier) : ''; ?>">
+            </div>
+
+            <div id="ssn">
+                <label for="ssn">N° de sécurité sociale:</label>
+                <input type="text" id="ssn" name="ssn" placeholder="Entrez votre N° de sécurité sociale"  value="<?php echo isset($ssn) ? htmlspecialchars($ssn) : ''; ?>">
+            </div>
             <label for="firstName">Prénom:</label>
             <input type="text" id="firstName" name="firstName" placeholder="Entrez votre prénom" required value="<?php echo isset($firstName) ? htmlspecialchars($firstName) : ''; ?>">
 
@@ -53,11 +65,18 @@ ob_start();
         </form>
     </div>
 </div>
+<script>
+    document.getElementById('registerAsDoctor').addEventListener('change', function() {
+        document.getElementById('doctorIdentifierField').style.display = this.checked ? 'block' : 'none';
+        document.getElementById('ssn').style.display = this.checked ? 'none' : 'block';
+    });
+</script>
 
 <?php
 // Fin de la capture, on récupère le contenu dans une variable
 $content = ob_get_clean();
 
 // Inclure la base
-include 'base.php';
+require 'base.php';
+
 ?>

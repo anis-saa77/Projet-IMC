@@ -4,24 +4,28 @@ $pageTitle = "Connexion - Calculateur d'IMC";
 include '../handlers/login.php';
 session_start();
 
-// Commencer la capture du contenu
+// Start output buffering
 ob_start();
 ?>
 
 <div class="container">
     <h1>Connexion</h1>
     <form action="login.php" method="POST">
-        <label for="social_security_number">N° de sécurité sociale</label>
+        <label for="social_security_number">N° de sécurité sociale/Numéro professionnelle médecin</label>
         <input type="text" name="social_security_number" required>
 
         <label for="password">Mot de passe</label>
         <input type="password" name="password" required>
+
+        <label for="is_doctor">Je suis un médecin</label>
+        <input type="checkbox" name="is_doctor" value="1"> <!-- Checkbox for doctor login -->
+
         <br></br>
         <button type="submit">Se connecter</button>
     </form>
 
     <?php
-    // Affichage de l'erreur si elle existe
+    // Display the error if it exists
     if (!empty($error)) {
         echo "<p style='color:red;'>$error</p>";
     }
@@ -29,9 +33,9 @@ ob_start();
 </div>
 
 <?php
-// Fin de la capture, on récupère le contenu dans une variable
+// End output buffering and get the content
 $content = ob_get_clean();
 
-// Inclure la base
+// Include the base
 include 'base.php';
 ?>
