@@ -7,8 +7,7 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
-
-$user_id = $_SESSION['id']; // Récupérer l'ID de l'utilisateur connecté
+$user_id = $_SESSION['user']['id']; // Récupérer l'ID de l'utilisateur connecté
 
 // Fonction pour lire les données de historic.csv
 function getIMCHistory($user_id) {
@@ -22,17 +21,18 @@ function getIMCHistory($user_id) {
         while (($data = fgetcsv($handle, 1000, ",")) !== false) {
             // Debug : Afficher la ligne courante
             var_dump($data);
+
             if (count($data) == 5) { // Vérifier que la ligne a 5 colonnes
                 // Debug : Vérifier l'ID utilisateur
-                echo "User ID from CSV: " . trim($data[4]) . " | User ID from session: $user_id <br>";
+                echo "User ID from CSV: " . trim($data[0]) . " | User ID from session: $user_id <br>";
 
                 // Si l'ID correspond à l'utilisateur connecté, ajouter l'entrée à l'historique
-                if (trim($data[4]) == $user_id) {
+                if (trim($data[0]) == $user_id) { // L'ID est dans la première colonne
                     $history[] = [
-                        'date' => $data[0],
-                        'taille' => $data[1],
-                        'poids' => $data[2],
-                        'imc' => $data[3]
+                        'date' => $data[1],
+                        'taille' => $data[2],
+                        'poids' => $data[3],
+                        'imc' => $data[4]
                     ];
 
                     // Debug : Afficher ce qui est ajouté à l'historique
@@ -53,6 +53,7 @@ function getIMCHistory($user_id) {
 
     return $history;
 }
+
 
 
 // Obtenir l'historique de l'utilisateur connecté

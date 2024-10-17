@@ -34,7 +34,7 @@ class IMCCalculator {
                 $date = date("Y-m-d");
 
                 // Préparer les données à ajouter dans le fichier CSV
-                $record = [$date, $this->height * 100, $this->weight, $imc, $user_id]; // Taille en cm
+                $record = [$user_id, $date, $this->height * 100, $this->weight, $imc]; // Taille en cm
 
                 // Ajouter les données dans historic.csv
                 $filename = '../includes/historic.csv';
