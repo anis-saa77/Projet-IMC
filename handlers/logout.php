@@ -1,6 +1,7 @@
 <?php
-session_start(); // Démarrer la session
-
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 // Vérifier si l'utilisateur est connecté
 if (isset($_SESSION['user'])) {
     // Détruire la session

@@ -1,7 +1,9 @@
 <?php
 $pageTitle = "IMC Calculator";
 include '../handlers/index.php';
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 // Commencer à capturer le contenu
 ob_start();
 ?>

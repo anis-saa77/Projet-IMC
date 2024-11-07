@@ -1,7 +1,9 @@
 <?php
 $pageTitle = "Dashboard";
 include '../handlers/dashboard.php'; // Assurez-vous que ce chemin est correct
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 // Commencer la capture du contenu
 ob_start();
 ?>

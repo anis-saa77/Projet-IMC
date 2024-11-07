@@ -1,7 +1,9 @@
 <!-- base.php -->
 <?php
 include '../handlers/base.php';
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 ?>
 
 <!DOCTYPE html>
