@@ -54,17 +54,40 @@ public function saveIMCToHistory($user) {
         // Ajouter les données dans historic.csv
         $filename = '../includes/historic.csv';
 
-        // Debug : Vérifier si le fichier peut être ouvert en mode ajout
-        var_dump("Opening file: " . $filename);
+        // Vérifier si la ligne existe déjà dans le fichier
+        $exists = false;
 
-        if (($handle = fopen($filename, 'a')) !== false) {
-            fputcsv($handle, $record);
-            fclose($handle);
+        if (file_exists($filename)) {
+            if (($handle = fopen($filename, 'r')) !== false) {
+                // Lire chaque ligne du fichier CSV
+                while (($data = fgetcsv($handle)) !== false) {
+                    // Comparer les données : user_id et date doivent être uniques
+                    if ($data[0] == $user_id && $data[1] == $date) {
+                        $exists = true;
+                        break;
+                    }
+                }
+                fclose($handle);
+            }
+        }
 
-            // Debug : Confirmer que les données ont été enregistrées
-            var_dump("Données de l'IMC enregistrées avec succès.");
+        // Si la ligne n'existe pas, ajouter la nouvelle ligne
+        if (!$exists) {
+            // Vérifier si le fichier peut être ouvert en mode ajout
+            var_dump("Opening file: " . $filename);
+
+            if (($handle = fopen($filename, 'a')) !== false) {
+                fputcsv($handle, $record);
+                fclose($handle);
+
+                // Debug : Confirmer que les données ont été enregistrées
+                var_dump("Données de l'IMC enregistrées avec succès.");
+            } else {
+                throw new Exception("Erreur lors de l'enregistrement dans le fichier.");
+            }
         } else {
-            throw new Exception("Erreur lors de l'enregistrement dans le fichier.");
+            // Debug : Avertir que les données existent déjà
+            var_dump("Les données pour cet utilisateur et cette date existent déjà.");
         }
     } catch (Exception $e) {
         // Debug : Afficher l'erreur en cas d'exception
