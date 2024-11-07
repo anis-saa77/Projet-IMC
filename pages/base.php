@@ -1,6 +1,7 @@
 <!-- base.php -->
 <?php
 include '../handlers/base.php';
+session_start();
 ?>
 
 <!DOCTYPE html>
