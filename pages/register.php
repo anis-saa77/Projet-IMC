@@ -2,8 +2,9 @@
 <?php
 $pageTitle = "Inscription - Calculateur d'IMC";
 include '../handlers/register.php';
-session_start();
-
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 // Commencer la capture du contenu
 ob_start();
 ?>
