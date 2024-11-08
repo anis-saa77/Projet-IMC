@@ -22,14 +22,13 @@ if (session_status() == PHP_SESSION_NONE) {
            <!-- Si l'utilisateur est connecté, afficher son prénom et nom -->
            <li><a href="../handlers/logout.php" class="btn">Déconnexion</a></li>
            <li><a href="profile.php" class="btn"><?php echo htmlspecialchars($_SESSION['user']['firstname']) . ' ' . htmlspecialchars($_SESSION['user']['lastname']); ?></a></li>
-            <li><a href="../pages/dashboard.php" class="btn">DashBoard</a></li>
-
+           <li><a href="../pages/dashboard.php" class="btn">DashBoard</a></li>
        <?php else: ?>
            <!-- Sinon, afficher les boutons de connexion et d'inscription -->
            <li><a href="login.php" class="btn">Se connecter</a></li>
            <li><a href="register.php" class="btn">S'inscrire</a></li>
-
        <?php endif; ?>
+       <li id="homepage_button"><a href="index.php" class="btn">HomePage</a></li>
    </ul>
 
     <div class="container">
