@@ -1,7 +1,7 @@
-id, social_security_number, firstname, lastname, password, birthday, phone_number, email, postal_code
-1,222-22-2222,test,test,$2y$10$lT8/2jTFhTzdvG4SwwebeOyRhu5To5gyMr6k9xIQyelv/r96Lf23O,2024-10-04,0978787878,toto@toto.fr,13000
-2,222-22-2222,test,test,$2y$10$si3192X59oorSmYh467LaegO1330LYef4NZrhdWE.zMflfMA3cgjq,2024-10-04,0978787878,toto@toto.fr,13000
-3,333-33-3333,test,test,$2y$10$RAFkNKhw3rET6jaf1BEVmO5GNDawg1IfMHv1GEyUHgi.bhiR3k9kO,2024-10-11,0687983445,toto@toto.fr,84310
-4,000-00-0000,Anis,Saa,$2y$10$9g7WueD9St1qskz4wj4R/.DVpllSfKPeuWkS9RAARBUahLdnfjM5q,2024-10-16,0768683592,anisamara777@gmail.com,13100
-5,999-99-9999,aze,aze,$2y$10$w3DYrpTT38qyYRYPwRvjIORrtxo0AcOxVyrXRKbCSeRkSSERZasdq,2024-10-05,0978565465,toto@toto.fr,13500
-6,111-11-1111,Anis,Saa,$2y$10$cD9XRuyP4/C4F7NXNPG2.uVHJpG6W3O1h2EEz4UDZ3fNDqx6YxSwW,2024-11-06,0768683592,anisamara777@gmail.com,13100
+id, social_security_number, firstname, lastname, password, birthday, phone_number, email, postal_code, doctor_id
+1,222-22-2222,test,test,$2y$10$lT8/2jTFhTzdvG4SwwebeOyRhu5To5gyMr6k9xIQyelv/r96Lf23O,2024-10-04,0978787878,toto@toto.fr,13000,null
+2,222-22-2222,test,test,$2y$10$si3192X59oorSmYh467LaegO1330LYef4NZrhdWE.zMflfMA3cgjq,2024-10-04,0978787878,toto@toto.fr,13000,null
+3,333-33-3333,test,test,$2y$10$RAFkNKhw3rET6jaf1BEVmO5GNDawg1IfMHv1GEyUHgi.bhiR3k9kO,2024-10-11,0687983445,toto@toto.fr,84310,null
+4,000-00-0000,Anis,Saa,$2y$10$9g7WueD9St1qskz4wj4R/.DVpllSfKPeuWkS9RAARBUahLdnfjM5q,2024-10-16,0768683592,anisamara777@gmail.com,13100,null
+5,999-99-9999,aze,aze,$2y$10$w3DYrpTT38qyYRYPwRvjIORrtxo0AcOxVyrXRKbCSeRkSSERZasdq,2024-10-05,0978565465,toto@toto.fr,13500, 4
+6,111-11-1111,Anis,Saa,$2y$10$cD9XRuyP4/C4F7NXNPG2.uVHJpG6W3O1h2EEz4UDZ3fNDqx6YxSwW,2024-11-06,0768683592,anisamara777@gmail.com,13100, 4

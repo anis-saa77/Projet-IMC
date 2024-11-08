@@ -44,7 +44,61 @@ function getIMCHistory($user_id) {
     return $history;
 }
 
+function getDoctorFullNameByID($id) {
+    // Chemin vers le fichier CSV
+    $filename = '../includes/doctors.csv';
 
+    // Ouvrir le fichier CSV en lecture
+    if (($handle = fopen($filename, 'r')) !== false) {
+        // Lire l'en-tête
+        $header = fgetcsv($handle);
+
+        // Parcourir chaque ligne du fichier CSV
+        while (($data = fgetcsv($handle)) !== false) {
+            // Associer les données de la ligne avec les noms des colonnes
+            $doctor_data = array_combine($header, $data);
+
+            // Vérifier si l'ID du docteur correspond à celui passé en paramètre
+            if ($doctor_data['id'] == $id) {
+                // Retourner le nom complet du docteur (prénom + nom)
+                $fullname = $doctor_data['firstname'] . ' ' . $doctor_data['lastname'];
+                return $fullname;
+            }
+        }
+
+        // Fermer le fichier
+        fclose($handle);
+    }
+
+    // Retourner null si aucun docteur avec cet ID n'est trouvé
+    return null;
+}
+
+function getPatientsByDoctorID($doctor_id){
+    $filename = '../includes/users.csv';
+    $patients = [];
+
+    if (($handle = fopen($filename, 'r')) !== false) {
+        $header = fgetcsv($handle); // Lire l'en-tête
+
+        while (($data = fgetcsv($handle)) !== false) {
+            // Supprime les espaces autour des clés et des valeurs
+            $user_data = array_combine(array_map('trim', $header), array_map('trim', $data));
+
+            if (isset($user_data['doctor_id']) && $user_data['doctor_id'] == $doctor_id) {
+                $patients[] = [
+                    'firstname' => $user_data['firstname'],
+                    'lastname' => $user_data['lastname'],
+                    'birthday' => $user_data['birthday']
+                ];
+            }
+        }
+        fclose($handle);
+    } else {
+        echo "<p>Erreur : Impossible d'ouvrir le fichier CSV.</p>";
+    }
+    return $patients;
+}
 
 // Obtenir l'historique de l'utilisateur connecté
 $imcHistory = getIMCHistory($user_id);

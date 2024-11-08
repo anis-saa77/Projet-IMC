@@ -41,9 +41,10 @@ function getUserFromData($social_security_number, $password, $isDoctor) {
                     'phone_number' => $data[6],
                     'email' => $data[7],
                     'postal_code' => $data[8],
+
                     // Note: No postal_code for doctors in this CSV structure
                 ];
-            } elseif (!$isDoctor && count($data) == 9) {  // User CSV has 9 fields
+            } elseif (!$isDoctor && count($data) == 10) {  // User CSV has 9 fields
                 $users[] = [
                     'id' => $data[0],
                     'social_security_number' => $data[1],
@@ -54,6 +55,7 @@ function getUserFromData($social_security_number, $password, $isDoctor) {
                     'phone_number' => $data[6],
                     'email' => $data[7],
                     'postal_code' => $data[8],
+                    'doctor_id' => $data[9],
                 ];
             }
         }
