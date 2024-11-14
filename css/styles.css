@@ -168,22 +168,22 @@ button:hover {
   background-color: darkblue;
 }
 
-#customers {
+table {
   font-family: Arial, Helvetica, sans-serif;
   border-collapse: collapse;
   width: 100%;
 }
 
-#customers td, #customers th {
+table td, table th {
   border: 1px solid #ddd;
   padding: 8px;
 }
 
-#customers tr:nth-child(even){background-color: #f2f2f2;}
+table tr:nth-child(even){background-color: #f2f2f2;}
 
-#customers tr:hover {background-color: #ddd;}
+table tr:hover {background-color: #ddd;}
 
-#customers th {
+table th {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
@@ -198,5 +198,47 @@ p {
     text-align: center;
 }
 
+/* CSS pour les éléments du dashboard de médecin */
 
+#add-patient-form {
+    min-width: 300px;
+    padding: 7px;
+    margin-bottom: 20px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
 
+    display: flex;
+    align-items: center;
+    float: right;
+
+}
+
+#add-patient-form input[type="text"] {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 10px; /* Espacement entre le champ et le bouton */
+}
+
+#add-patient-form button {
+    width: auto;
+    padding: 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#add-patient-form button:hover {
+    background-color: #218838;
+}
+
+p #no-patient {
+    color: #333; /* Texte foncé */
+    font-size: 16px;
+    text-align: center;
+}
