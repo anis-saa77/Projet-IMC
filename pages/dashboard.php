@@ -1,4 +1,6 @@
 <?php
+require_once '../src/Config.php';//get project constants
+
 $pageTitle = "Dashboard";
 include '../handlers/dashboard.php'; // Assurez-vous que ce chemin est correct
 if (session_status() == PHP_SESSION_NONE) {

@@ -1,9 +1,13 @@
 <!-- base.php -->
 <?php
+require_once '../src/Config.php';//get project constants
 include '../handlers/base.php';
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
+
+// echo "<pre>" . print_r(array($_SESSION, BASE_URL_PATH, BASE_URI_PATH,
+// DOCTORS_DB_PATH, PATIENTS_DB_PATH), true) . "</pre>";
 ?>
 
 <!DOCTYPE html>
@@ -23,6 +27,9 @@ if (session_status() == PHP_SESSION_NONE) {
            <li><a href="../handlers/logout.php" class="btn">Déconnexion</a></li>
            <li><a href="profile.php" class="btn"><?php echo htmlspecialchars($_SESSION['user']['firstname']) . ' ' . htmlspecialchars($_SESSION['user']['lastname']); ?></a></li>
             <li><a href="../pages/dashboard.php" class="btn">DashBoard</a></li>
+            <?php if(isset($_SESSION['user']['doctor_pro_identifier'])): ?>
+                <li><a href="../pages/assignPatientToDoctor.php" class="btn">Ajouter Patient</a></li>
+            <?php endif; ?>
 
        <?php else: ?>
            <!-- Sinon, afficher les boutons de connexion et d'inscription -->

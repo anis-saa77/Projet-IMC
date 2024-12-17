@@ -1,5 +1,7 @@
 <!-- register.php -->
 <?php
+require_once '../src/Config.php';//get project constants
+
 $pageTitle = "Inscription - Calculateur d'IMC";
 include '../handlers/register.php';
 if (session_status() == PHP_SESSION_NONE) {

@@ -1,7 +1,9 @@
 <!-- login.php -->
 <?php
+require_once '../src/Config.php';//get project constants
+
 $pageTitle = "Connexion - Calculateur d'IMC";
-include '../handlers/login.php';
+include '../handlers/login.php';//MAJOR_ISSUE: login file is spilling into this file
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
