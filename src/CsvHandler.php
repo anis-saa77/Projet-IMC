@@ -3,7 +3,7 @@
 class CsvHandler{
 
 
-    public static function getUserFromData($social_security_number, $password, $isDoctor) {
+    public static function getUserFromData($social_security_number, $password, $isDoctor= false) {
         $filename = $isDoctor ? DOCTORS_DB_PATH : PATIENTS_DB_PATH; // Determine the correct file
         $users = [];
     
@@ -12,7 +12,9 @@ class CsvHandler{
     
             // Read each line from the CSV file
             while (($data = fgetcsv($handle, 1000, ",")) !== false) {
-                if ($isDoctor && count($data) == 9) {  // Doctor CSV has 8 fields
+
+                if ($isDoctor && count($data) == 10) {  // Doctor CSV has 8 fields
+
                     $users[] = [
                         'id' => $data[0],
                         'doctor_pro_identifier' => $data[1],
@@ -25,7 +27,7 @@ class CsvHandler{
                         'postal_code' => $data[8],
                         // Note: No postal_code for doctors in this CSV structure
                     ];
-                } elseif (!$isDoctor && count($data) == 9) {  // User CSV has 9 fields
+                } elseif (!$isDoctor && count($data) == 10) {  // User CSV has 9 fields
                     $users[] = [
                         'id' => $data[0],
                         'social_security_number' => $data[1],
