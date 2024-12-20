@@ -30,13 +30,12 @@ if (session_status() == PHP_SESSION_NONE) {
             <?php if(isset($_SESSION['user']['doctor_pro_identifier'])): ?>
                 <li><a href="../pages/assignPatientToDoctor.php" class="btn">Ajouter Patient</a></li>
             <?php endif; ?>
-
        <?php else: ?>
            <!-- Sinon, afficher les boutons de connexion et d'inscription -->
            <li><a href="login.php" class="btn">Se connecter</a></li>
            <li><a href="register.php" class="btn">S'inscrire</a></li>
-
        <?php endif; ?>
+       <li id="homepage_button"><a href="index.php" class="btn">HomePage</a></li>
    </ul>
 
     <div class="container">
