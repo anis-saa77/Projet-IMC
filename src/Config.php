@@ -4,7 +4,6 @@ if (!defined('BASE_URI_PATH')) {
     define('BASE_URI_PATH', dirname(__DIR__));
 }
 
-
 // Define the base URL path dynamically
 if (!defined('BASE_URL_PATH')) {
     $projectFolder = basename(BASE_URI_PATH);

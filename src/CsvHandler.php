@@ -36,7 +36,7 @@ class CsvHandler{
                         'phone_number' => $data[6],
                         'email' => $data[7],
                         'postal_code' => $data[8],
-                        'family_doctor' => $data[9]
+                        'doctor_id' => $data[9]
                     ];
                 }
             }
@@ -99,7 +99,7 @@ class CsvHandler{
                         'phone_number' => $data[6],
                         'email' => $data[7],
                         'postal_code' => $data[8],
-                        'family_doctor' => $data[9]
+                        'doctor_id' => $data[9]
                     ];
                 }
             }
@@ -178,7 +178,7 @@ class CsvHandler{
                         'phone_number' => $data[6],
                         'email' => $data[7],
                         'postal_code' => $data[8],
-                        'family_doctor' => $data[9]
+                        'doctor_id' => $data[9]
                     ];
                     break; // No need to continue searching once found
                 }
