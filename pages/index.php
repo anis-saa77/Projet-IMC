@@ -1,4 +1,6 @@
 <?php
+require_once '../src/Config.php';//get project constants
+
 $pageTitle = "IMC Calculator";
 include '../handlers/index.php';
 if (session_status() == PHP_SESSION_NONE) {
